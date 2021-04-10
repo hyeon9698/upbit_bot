@@ -1,6 +1,7 @@
 coin,target,money_list,hold,op_mode
 ENJ,1000000000000000,-1,False,False
 SAND,1000000000000000,-1,False,False
+TRX,1000000000000000,-1,False,False
 BTT,1000000000000000,-1,False,False
 XRP,1000000000000000,-1,False,False
 DKA,1000000000000000,-1,False,False

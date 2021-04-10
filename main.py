@@ -81,10 +81,12 @@ df = pd.read_csv('dataset.csv')
 df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
 
 # 변수 설정
+# 총 16개
 # ENJ 엔진코인 18%
 # SAND 샌드박스 18%
-# BTT 비트토렌트 18%
-# XRP 리플 10%
+# TRX 트론 18%
+# BTT 비트토렌트 10%
+# XRP 리플 3%
 # DKA 디카르고 3%
 # MLK 밀크 3%
 # AQT 알파쿼크 3%
@@ -96,6 +98,7 @@ df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_auto
 # PCI 페이코인 3%
 # BORA 보라 3%
 # XLM 스텔라루멘 3%
+
 INF = 1000000000000
 coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK", "KRW-AQT", "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", "KRW-BORA", "KRW-XLM"]
 percent_list = [0.18, 0.18, 0.18, 0.10, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03]
