@@ -51,9 +51,9 @@ def save_data(krw_balance):
     0
     ]
     now_prices = [-1]*(n) 
-    jonbeo = "-----들고만 있었으면-----\n"
+    jonbeo = "----------들고만 있었으면----------\n"
     total_jonbeo = 0
-    auto_upbit = "-----자동화-----\n"
+    auto_upbit = "----------자동화----------\n"
     auto_upbit += "자동화 총 금액 -> " + str(krw_balance) + "\n"
     for i in range(n):
         now_prices[i] = pyupbit.get_current_price(coin_list[i])
@@ -140,7 +140,7 @@ while True:
         prev_day = now.day
         save1 = True
         save2 = True
-        msg = "save 변수가 업데이트 됐습니다.-> save1: " + str(save1) + " save2 -> " + str(save2)
+        msg = "save 변수가 True로 업데이트 됐습니다.\nsave1: " + str(save1) + " save2 -> " + str(save2)
         bot.sendMessage(mc,msg)
 
     # 매도 시도
@@ -163,7 +163,7 @@ while True:
             money_list[i] = int(krw_balance * (percent_list[i]+0.10))
             df.loc[i, 'money_list'] = money_list[i]
             df.to_csv('dataset.csv', index=None)
-        msg = "-------------------------매수할 돈 정보 갱신(money_list)-------------------------\n"
+        msg = "----------매수할 돈 정보 갱신(money_list)----------\n"
         for i in range(n):
             msg += coin_list[i] + " " + str(money_list[i])+"원"+"\n"
         print(msg)
@@ -184,7 +184,7 @@ while True:
                 op_mode[i] = True
                 df.loc[i, 'op_mode'] = True
                 df.to_csv('dataset.csv', index=None)
-        msg = "-------------------------목표가 갱신(target)-------------------------\n"
+        msg = "----------목표가 갱신(target)----------\n"
         for i in range(n):
             msg += coin_list[i] + " " + str(target[i])+"원"+"\n"
         print(msg)
@@ -194,7 +194,7 @@ while True:
     # 현 가격 가져오기
     for i in range(n):
         prices[i] = pyupbit.get_current_price(coin_list[i])
-        time.sleep(0.1)
+        time.sleep(0.1)  # 실행할때는 주석처리하기
 
     # 매초마다 조건을 확인한 후 매수 시도
     for i in range(n):
@@ -204,7 +204,7 @@ while True:
             hold[i] = True
             df.loc[i, 'hold'] = True
             df.to_csv('dataset.csv', index=None)
-            print('-------------------------매수 완료---------------------------')
+            print('----------매수 완료------------')
 
     # 상태 출력
     printall()
