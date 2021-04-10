@@ -201,6 +201,11 @@ while True:
         print(msg)
         bot.sendMessage(mc,msg)
         save2 = False
+        print("어제 ma5 가격 갱신")
+        for i in range(n):
+            time.sleep(0.3)
+            yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
+            print(f"{'%8s'%coin_list[i]} -> {'%11.2f'%yesterday_ma5[i]} 원")
 
     # 현 가격 가져오기
     for i in range(n):
