@@ -206,15 +206,14 @@ while True:
     # 09:00:00 목표가 갱신
     if now.hour == 9 and now.minute == 0 and save2:
         time.sleep(1)
-        for i in range(n):
-            if not op_mode[i]:
-                target[i] = cal_target(coin_list[i])
-                df.loc[i, 'target'] = target[i]
-                df.to_csv('dataset.csv', index=None)
+        for i in range(n):            
+            target[i] = cal_target(coin_list[i])
+            df.loc[i, 'target'] = target[i]
+            df.to_csv('dataset.csv', index=None)
 
-                op_mode[i] = True
-                df.loc[i, 'op_mode'] = True
-                df.to_csv('dataset.csv', index=None)
+            op_mode[i] = True
+            df.loc[i, 'op_mode'] = True
+            df.to_csv('dataset.csv', index=None)
         msg = "----------목표가 갱신(target)----------\n"
         for i in range(n):
             msg += coin_list[i] + " " + str(target[i])+"원"+"\n"
