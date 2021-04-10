@@ -115,10 +115,11 @@ now = datetime.now(timezone('Asia/Seoul'))
 prev_day = now.day
 
 # 중간에 시작하더라도 아침 9시에 보유한 코인들을 팔 수 있게 만들었음
+print("현재 보유중인 코인 개수")
 for i in range(n):
     time.sleep(0.3)
     balance = upbit.get_balance(ticker=coin_list[i])
-    print(balance)
+    print("%8s"%coin_list[i]," -> ", balance, "개")
     if balance > 0:
         df.loc[i, 'hold'] = True
         df.to_csv('dataset.csv', index=None)
@@ -159,7 +160,7 @@ while True:
         time.sleep(1)
         krw_balance = upbit.get_balance("KRW")
         for i in range(n):
-            money_list[i] = int(krw_balance * (percent_list[i]+0.01))
+            money_list[i] = int(krw_balance * (percent_list[i]+0.10))
             df.loc[i, 'money_list'] = money_list[i]
             df.to_csv('dataset.csv', index=None)
         msg = "-------------------------매수할 돈 정보 갱신(money_list)-------------------------\n"
