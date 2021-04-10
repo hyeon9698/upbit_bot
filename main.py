@@ -10,9 +10,9 @@ import os
 
 def cal_target(ticker):
     time.sleep(0.3)
-    df = pyupbit.get_ohlcv(ticker, "day")
-    yesterday = df.iloc[-2]
-    today = df.iloc[-1]
+    df_cal_target = pyupbit.get_ohlcv(ticker, "day")
+    yesterday = df_cal_target.iloc[-2]
+    today = df_cal_target.iloc[-1]
     yesterday_range = yesterday['high'] - yesterday['low']
     target = today['open'] + yesterday_range * 0.5
     return target
@@ -69,8 +69,8 @@ def save_data(krw_balance):
     df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo}, ignore_index=True)
     df2.to_csv('saved_data.csv', mode='a', header=False)
 def get_yesterday_ma5(ticker):
-    df = pyupbit.get_ohlcv(ticker)
-    close = df['close']
+    df_get_yesterday_ma5 = pyupbit.get_ohlcv(ticker)
+    close = df_get_yesterday_ma5['close']
     ma = close.rolling(window=5).mean()
     return ma[-2]
 # 객체 생성
@@ -120,7 +120,7 @@ prev_day = now.day
 yesterday_ma5 = [0]*(n)
 
 # 중간에 시작하더라도 아침 9시에 보유한 코인들을 팔 수 있게 만들었음
-print("현재 보유중인 코인 개수")
+print("----------현재 보유중인 코인 개수----------")
 for i in range(n):
     time.sleep(0.3)
     balance = upbit.get_balance(ticker=coin_list[i])
@@ -129,7 +129,7 @@ for i in range(n):
         df.loc[i, 'hold'] = True
         df.to_csv('dataset.csv', index=None)
         hold[i] = True
-print("어제 ma5 가격")
+print("----------어제 ma5 가격----------")
 for i in range(n):
     time.sleep(0.3)
     yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
@@ -141,6 +141,14 @@ for i in range(n):
     money_list[i] = df.loc[i,'money_list']
     hold[i] = df.loc[i,'hold']
     op_mode[i] = df.loc[i,'op_mode']
+
+# 만약 코드를 실행할때 지금이 아침 8시가 지났을 경우 9시까지 거래를 안한다.
+## 추후에 수정 필요 이걸 할지 안 할지 밤 새서 코드가 돌아가는 확신이 있으면 없애도 될듯
+## 밑에 코드는 밤사이 코드가 멈췄을때를 위한 장치, 사는 것을 멈춤
+if now.hour == 8:
+    for i in range(n):
+        op_mode[i] = False
+        df.loc[i,'op_mode'] = False
 
 while True:
     # 지금 한국 시간
