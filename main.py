@@ -25,14 +25,14 @@ def sell(ticker):
     bot.sendMessage(mc,msg)
 def buy(ticker, money):
     time.sleep(1)
-    b = upbit.buy_market_order(ticker, money-1000)
-    msg = str(ticker)+" "+str(money-1000)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
+    b = upbit.buy_market_order(ticker, money)
+    msg = str(ticker)+" "+str(money)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
     print(msg)
     bot.sendMessage(mc,msg)
 def printall():
     print(f"------------------------------{now.strftime('%Y-%m-%d %H:%M:%S')}------------------------------" )
     for i in range(n):
-        print(f"코인: {'%8s'%coin_list[i]} 목표가: {'%11.2f'%target[i]} 현재가: {'%11.2f'%prices[i]} 매수할금액: {'%7d'%(money_list[i]-1000)} 보유상태: {'%5s'%hold[i]} 동작상태: {op_mode[i]}")
+        print(f"코인: {'%8s'%coin_list[i]} 목표가: {'%11.2f'%target[i]} 현재가: {'%11.2f'%prices[i]} 매수할금액: {'%7d'%money_list[i]} 보유상태: {'%5s'%hold[i]} 동작상태: {op_mode[i]}")
 def save_data(krw_balance):
     own_coin_list_04_08 = [
     164545.48742559,
@@ -68,7 +68,11 @@ def save_data(krw_balance):
     df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
     df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo}, ignore_index=True)
     df2.to_csv('saved_data.csv', mode='a', header=False)
-
+def get_yesterday_ma5(ticker):
+    df = pyupbit.get_ohlcv(ticker)
+    close = df['close']
+    ma = close.rolling(window=5).mean()
+    return ma[-2]
 # 객체 생성
 load_dotenv()
 access = os.getenv('UPBIT_API_ACCESS_KEY')
@@ -113,6 +117,7 @@ save2 = True
 krw_balance = 0
 now = datetime.now(timezone('Asia/Seoul'))
 prev_day = now.day
+yesterday_ma5 = [0]*(n)
 
 # 중간에 시작하더라도 아침 9시에 보유한 코인들을 팔 수 있게 만들었음
 print("현재 보유중인 코인 개수")
@@ -124,6 +129,12 @@ for i in range(n):
         df.loc[i, 'hold'] = True
         df.to_csv('dataset.csv', index=None)
         hold[i] = True
+print("어제 ma5 가격")
+for i in range(n):
+    time.sleep(0.3)
+    yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
+    print(f"{'%8s'%coin_list[i]} -> {'%11.2f'%yesterday_ma5[i]} 원")
+
 # 중간에 시작하더라도 target 데이터와 money_list 데이터 op_mode, hold데이터 가지고 옴
 for i in range(n):
     target[i] = df.loc[i,'target']
@@ -160,7 +171,7 @@ while True:
         time.sleep(1)
         krw_balance = upbit.get_balance("KRW")
         for i in range(n):
-            money_list[i] = int(krw_balance * (percent_list[i]+0.10))
+            money_list[i] = int(krw_balance * (percent_list[i]+0.15))
             df.loc[i, 'money_list'] = money_list[i]
             df.to_csv('dataset.csv', index=None)
         msg = "----------매수할 돈 정보 갱신(money_list)----------\n"
@@ -198,7 +209,7 @@ while True:
 
     # 매초마다 조건을 확인한 후 매수 시도
     for i in range(n):
-        if op_mode[i] and not hold[i] and prices[i] >= target[i]:
+        if op_mode[i] and not hold[i] and prices[i] >= target[i] and prices[i] >= yesterday_ma5[i]:
             # 매수
             buy(coin_list[i], money_list[i])
             hold[i] = True
