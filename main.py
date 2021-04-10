@@ -32,7 +32,7 @@ def buy(ticker, money):
 def printall():
     print(f"------------------------------{now.strftime('%Y-%m-%d %H:%M:%S')}------------------------------" )
     for i in range(n):
-        print(f"코인: {'%8s'%coin_list[i]} 목표가: {'%11.2f'%target[i]} 현재가: {'%11.2f'%prices[i]} 매수할금액: {'%9.2f'%money_list[i]} 보유상태: {'%5s'%hold[i]} 동작상태: {op_mode[i]}")
+        print(f"코인: {'%8s'%coin_list[i]} 목표가: {'%11.2f'%target[i]} 현재가: {'%11.2f'%prices[i]} 매수할금액: {'%7d'%(money_list[i]-1000)} 보유상태: {'%5s'%hold[i]} 동작상태: {op_mode[i]}")
 def save_data(krw_balance):
     own_coin_list = [
     164545.48742559,
@@ -81,24 +81,24 @@ df = pd.read_csv('dataset.csv')
 df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
 
 # 변수 설정
-# BTT 비트토렌트 15%
-# SAND 샌드박스 15%
-# ENJ 엔진코인 15%
-# XRP 리플 15%
-# DKA 디카르고 4%
-# MLK 밀크 4%
-# AQT 알파쿼크 4%
-# MED 메디블록 4%
-# BTC 비트코인 4%
-# ADA 에이다 4%
-# ETH 이더리움 4%
-# BCH 비트코인캐시 4%
-# PCI 페이코인 4%
-# BORA 보라 4%
-
+# ENJ 엔진코인 18%
+# SAND 샌드박스 18%
+# BTT 비트토렌트 18%
+# XRP 리플 10%
+# DKA 디카르고 3%
+# MLK 밀크 3%
+# AQT 알파쿼크 3%
+# MED 메디블록 3%
+# BTC 비트코인 3%
+# ADA 에이다 3%
+# ETH 이더리움 3%
+# BCH 비트코인캐시 3%
+# PCI 페이코인 3%
+# BORA 보라 3%
+# XLM 스텔라루멘 3%
 INF = 1000000000000
-coin_list = ["KRW-BTT", "KRW-SAND", "KRW-ENJ", "KRW-XRP", "KRW-DKA", "KRW-MLK", "KRW-AQT", "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", "KRW-BORA"]
-percent_list = [0.15, 0.15, 0.15, 0.15, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04]
+coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK", "KRW-AQT", "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", "KRW-BORA", "KRW-XLM"]
+percent_list = [0.18, 0.18, 0.18, 0.10, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03]
 n = len(coin_list)
 money_list = [0]*(n)
 op_mode = [False] * (n) # 당일 9시에 코드를 시작하지 않았을 경우를 위한 변수
@@ -156,7 +156,7 @@ while True:
         time.sleep(1)
         krw_balance = upbit.get_balance("KRW")
         for i in range(n):
-            money_list[i] = int(krw_balance * percent_list[i])
+            money_list[i] = int(krw_balance * (percent_list[i]+0.01))
             df.loc[i, 'money_list'] = money_list[i]
             df.to_csv('dataset.csv', index=None)
         msg = "-------------------------매수할 돈 정보 갱신(money_list)-------------------------\n"
