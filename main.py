@@ -26,7 +26,7 @@ def sell(ticker):
 def buy(ticker, money):
     time.sleep(1)
     b = upbit.buy_market_order(ticker, money-1000)
-    msg = str(ticker)+" "+str(money)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
+    msg = str(ticker)+" "+str(money-1000)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
     print(msg)
     bot.sendMessage(mc,msg)
 def printall():
