@@ -34,7 +34,7 @@ def printall():
     for i in range(n):
         print(f"코인: {'%8s'%coin_list[i]} 목표가: {'%11.2f'%target[i]} 현재가: {'%11.2f'%prices[i]} 매수할금액: {'%7d'%(money_list[i]-1000)} 보유상태: {'%5s'%hold[i]} 동작상태: {op_mode[i]}")
 def save_data(krw_balance):
-    own_coin_list = [
+    own_coin_list_04_08 = [
     164545.48742559,
     1830.30246740,
     380.92350925,
@@ -57,8 +57,8 @@ def save_data(krw_balance):
     auto_upbit += "자동화 총 금액 -> " + str(krw_balance) + "\n"
     for i in range(n):
         now_prices[i] = pyupbit.get_current_price(coin_list[i])
-        total_jonbeo += now_prices[i]*own_coin_list[i]
-        jonbeo += coin_list[i] + " 현 가격: " + str(now_prices[i]) + "이 코인의 총 가격" + str(now_prices[i]*own_coin_list[i]) + "\n"
+        total_jonbeo += now_prices[i]*own_coin_list_04_08[i]
+        jonbeo += coin_list[i] + " 현 가격: " + str(now_prices[i]) + "이 코인의 총 가격" + str(now_prices[i]*own_coin_list_04_08[i]) + "\n"
         time.sleep(0.3)
     total_jonbeo += 1610370
     jonbeo += "지금까지 존버했으면 총 금액 -> " + str(total_jonbeo) + "\n"
