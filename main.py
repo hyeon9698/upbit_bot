@@ -146,6 +146,18 @@ for i in range(n):
 ## 추후에 수정 필요 이걸 할지 안 할지 밤 새서 코드가 돌아가는 확신이 있으면 없애도 될듯
 ## 밑에 코드는 밤사이 코드가 멈췄을때를 위한 장치, 사는 것을 멈춤
 if now.hour == 8:
+    print("8시에 코드를 실행했으므로 save guard가 실행됩니다.")
+    print("만약 이게 없었으면 당신은: ")
+    time.sleep(1)
+    flag = True
+    for i in range(n):
+        if op_mode[i] and not hold[i]:
+            time.sleep(0.3)
+            if target[i] < pyupbit.get_current_price(coin_list[i]):
+                flag = False
+                print(f"{coin_list[i]} 를 {money_list[i]} 만큼 구매 예정이었습니다. 그리고 오전 9시에 팔았을 겁니다.")
+    if flag:
+        print("아무일도 일어나지 않았습니다. save guard가 실행됩니다. 9시가 되면 리셋 됩니다.")
     for i in range(n):
         op_mode[i] = False
         df.loc[i,'op_mode'] = False
