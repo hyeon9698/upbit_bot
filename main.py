@@ -9,7 +9,7 @@ from dotenv import load_dotenv # pip install python-dotenv
 import os
 
 def cal_target(ticker):
-    time.sleep(0.3)
+    time.sleep(0.1)
     df_cal_target = pyupbit.get_ohlcv(ticker, "day")
     yesterday = df_cal_target.iloc[-2]
     today = df_cal_target.iloc[-1]
@@ -17,14 +17,14 @@ def cal_target(ticker):
     target = today['open'] + yesterday_range * 0.5
     return target
 def sell(ticker):
-    time.sleep(0.3)
+    time.sleep(0.1)
     balance = upbit.get_balance(ticker)
     s = upbit.sell_market_order(ticker, balance)
     msg = str(ticker)+"매도 시도"+"\n"+json.dumps(s, ensure_ascii = False)
     print(msg)
     bot.sendMessage(mc,msg)
 def buy(ticker, money):
-    time.sleep(1)
+    time.sleep(0.1)
     b = upbit.buy_market_order(ticker, money)
     msg = str(ticker)+" "+str(money)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
     print(msg)
@@ -124,7 +124,7 @@ yesterday_ma5 = [0]*(n)
 # 중간에 시작하더라도 아침 9시에 보유한 코인들을 팔 수 있게 만들었음
 print("----------현재 보유중인 코인 개수----------")
 for i in range(n):
-    time.sleep(0.3)
+    time.sleep(0.1)
     balance = upbit.get_balance(ticker=coin_list[i])
     print("%8s"%coin_list[i]," -> ", balance, "개")
     if balance > 0:
@@ -133,7 +133,7 @@ for i in range(n):
         hold[i] = True
 print("----------어제 ma5 가격----------")
 for i in range(n):
-    time.sleep(0.3)
+    time.sleep(0.1)
     yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
     print(f"{'%8s'%coin_list[i]} -> {'%11.1f'%yesterday_ma5[i]} 원")
 
@@ -150,11 +150,11 @@ for i in range(n):
 if now.hour == 8:
     print("8시에 코드를 실행했으므로 save guard가 실행됩니다.")
     print("만약 이게 없었으면 당신은: ")
-    time.sleep(1)
+    time.sleep(0.1)
     flag = True
     for i in range(n):
         if op_mode[i] and not hold[i]:
-            time.sleep(0.3)
+            time.sleep(0.1)
             if target[i] < pyupbit.get_current_price(coin_list[i]):
                 flag = False
                 print(f"{coin_list[i]} 를 {money_list[i]} 만큼 구매 예정이었습니다. 그리고 오전 9시에 팔았을 겁니다.")
@@ -190,7 +190,7 @@ while True:
         print('----------전부 매도 완료----------')
 
         # 매도가 다 되고 나서
-        time.sleep(1)
+        time.sleep(0.1)
         krw_balance = upbit.get_balance("KRW")
         for i in range(n):
             money_list[i] = int(krw_balance * (percent_list[i]+0.10))
@@ -206,7 +206,6 @@ while True:
 
     # 09:00:00 목표가 갱신
     if now.hour == 9 and now.minute == 0 and save2:
-        time.sleep(1)
         for i in range(n):            
             target[i] = cal_target(coin_list[i])
             df.loc[i, 'target'] = target[i]
@@ -222,7 +221,7 @@ while True:
         save2 = False
         print("어제 ma5 가격 갱신")
         for i in range(n):
-            time.sleep(0.3)
+            time.sleep(0.1)
             yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
             print(f"{'%8s'%coin_list[i]} -> {'%11.1f'%yesterday_ma5[i]} 원")
 
