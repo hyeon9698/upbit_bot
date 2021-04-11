@@ -32,7 +32,7 @@ def buy(ticker, money):
 def printall():
     print(f"------------------------------{now.strftime('%Y-%m-%d %H:%M:%S')}------------------------------" )
     for i in range(n):
-        print(f"코인: {'%8s'%coin_list[i]} 목표가: {'%11.2f'%target[i]} 현재가: {'%11.2f'%prices[i]} 매수할금액: {'%7d'%money_list[i]} 보유상태: {'%5s'%hold[i]} 동작상태: {op_mode[i]}")
+        print(f"{'%8s'%coin_list[i]} 목표가: {'%11.1f'%target[i]} 현재가: {'%11.1f'%prices[i]} 매수금액: {'%7d'%money_list[i]} hold: {'%5s'%hold[i]} status: {op_mode[i]}")
 def save_data(krw_balance):
     own_coin_list_04_08 = [
         380.92350925, # enj
@@ -135,7 +135,7 @@ print("----------어제 ma5 가격----------")
 for i in range(n):
     time.sleep(0.3)
     yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
-    print(f"{'%8s'%coin_list[i]} -> {'%11.2f'%yesterday_ma5[i]} 원")
+    print(f"{'%8s'%coin_list[i]} -> {'%11.1f'%yesterday_ma5[i]} 원")
 
 # 중간에 시작하더라도 target 데이터와 money_list 데이터 op_mode, hold데이터 가지고 옴
 for i in range(n):
@@ -224,7 +224,7 @@ while True:
         for i in range(n):
             time.sleep(0.3)
             yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
-            print(f"{'%8s'%coin_list[i]} -> {'%11.2f'%yesterday_ma5[i]} 원")
+            print(f"{'%8s'%coin_list[i]} -> {'%11.1f'%yesterday_ma5[i]} 원")
 
     # 현 가격 가져오기
     for i in range(n):
