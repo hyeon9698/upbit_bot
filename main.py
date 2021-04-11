@@ -35,20 +35,22 @@ def printall():
         print(f"코인: {'%8s'%coin_list[i]} 목표가: {'%11.2f'%target[i]} 현재가: {'%11.2f'%prices[i]} 매수할금액: {'%7d'%money_list[i]} 보유상태: {'%5s'%hold[i]} 동작상태: {op_mode[i]}")
 def save_data(krw_balance):
     own_coin_list_04_08 = [
-    164545.48742559,
-    1830.30246740,
-    380.92350925,
-    0,
-    3060.94093686,
-    173.66460848,
-    0.47666666,
-    1855.12241723,
-    0.00550091,
-    250.37281553,
-    0.09961308,
-    0.14317678,
-    0,
-    0
+        380.92350925, # enj
+        1830.30246740, # sand
+        0, # trx
+        164545.48742559, # btt
+        0, # xrp
+        3060.94093686, # dka
+        173.66460848, # mlk
+        0.47666666, # aqt
+        1855.12241723, #med
+        0.00550091, #btc
+        250.37281553, #ada
+        0.09961308, # eth
+        0.14317678, # bch
+        0, # pci
+        0, # bora
+        0 #xlm
     ]
     now_prices = [-1]*(n) 
     jonbeo = "----------들고만 있었으면----------\n"
@@ -200,8 +202,7 @@ while True:
         print(msg)
         bot.sendMessage(mc,msg)
         save_data(krw_balance)
-        save1 = False
-        
+        save1 = False        
 
     # 09:00:00 목표가 갱신
     if now.hour == 9 and now.minute == 0 and save2:
@@ -210,7 +211,6 @@ while True:
             target[i] = cal_target(coin_list[i])
             df.loc[i, 'target'] = target[i]
             df.to_csv('dataset.csv', index=None)
-
             op_mode[i] = True
             df.loc[i, 'op_mode'] = True
             df.to_csv('dataset.csv', index=None)
