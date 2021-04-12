@@ -52,6 +52,7 @@ def save_data(krw_balance):
         0, # bora
         0 #xlm
     ]
+    df_saved_data = pd.read_csv('saved_data.csv')
     now_prices = [-1]*(n) 
     jonbeo = "----------들고만 있었으면----------\n"
     total_jonbeo = 0
@@ -61,13 +62,20 @@ def save_data(krw_balance):
         now_prices[i] = pyupbit.get_current_price(coin_list[i])
         total_jonbeo += now_prices[i]*own_coin_list_04_08[i]
         jonbeo += coin_list[i] + " 현 가격: " + str(now_prices[i]) + "이 코인의 총 가격" + str(now_prices[i]*own_coin_list_04_08[i]) + "\n"
-        time.sleep(0.3)
+        time.sleep(0.1)
     total_jonbeo += 1610370
     jonbeo += "지금까지 존버했으면 총 금액 -> " + str(total_jonbeo) + "\n"
-    msg = jonbeo + auto_upbit + "존버와의 금액 차이 -> " + str(krw_balance - total_jonbeo) + "원 벌었음(-이면 잃은거)"
-    df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
-    df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo}, ignore_index=True)
-    df2.to_csv('saved_data.csv', mode='a', header=False)
+    msg = jonbeo + auto_upbit + "존버와의 금액 차이 -> " + str(krw_balance - total_jonbeo) + "원 벌었음(-이면 잃은거)\n"
+    try:
+        dif_yesterday = krw_balance - df_saved_data.iloc[-1]['auto_upbit']
+        msg += "!!어제와의 금액 차이!!: " + str(dif_yesterday)
+        df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit','difference_yesterday'])
+        df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo,'difference_yesterday':dif_yesterday}, ignore_index=True)
+        df2.to_csv('saved_data.csv', mode='a', header=False)
+    except:        
+        df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
+        df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo}, ignore_index=True)
+        df2.to_csv('saved_data.csv', mode='a', header=False)
     print(msg)
     bot.sendMessage(mc,msg)
 def get_yesterday_ma5(ticker):
