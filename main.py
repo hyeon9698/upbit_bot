@@ -64,12 +64,12 @@ def save_data(krw_balance):
         time.sleep(0.3)
     total_jonbeo += 1610370
     jonbeo += "지금까지 존버했으면 총 금액 -> " + str(total_jonbeo) + "\n"
-    msg = jonbeo + auto_upbit + "금액 차이 -> " + str(krw_balance - total_jonbeo) + "원 벌었음(-이면 잃은거)"
-    print(msg)
-    bot.sendMessage(mc,msg)
+    msg = jonbeo + auto_upbit + "존버와의 금액 차이 -> " + str(krw_balance - total_jonbeo) + "원 벌었음(-이면 잃은거)"
     df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
     df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo}, ignore_index=True)
     df2.to_csv('saved_data.csv', mode='a', header=False)
+    print(msg)
+    bot.sendMessage(mc,msg)
 def get_yesterday_ma5(ticker):
     df_get_yesterday_ma5 = pyupbit.get_ohlcv(ticker)
     close = df_get_yesterday_ma5['close']
