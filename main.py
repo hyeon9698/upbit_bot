@@ -35,27 +35,27 @@ def printall():
         print(f"{'%8s'%coin_list[i]} 목표가: {'%11.1f'%target[i]} 현재가: {'%11.1f'%prices[i]} 매수금액: {'%7d'%money_list[i]} hold: {'%5s'%hold[i]} status: {op_mode[i]}")
 def save_data(krw_balance):
     own_coin_list_04_08 = [
-        380.92350925, # enj
-        1830.30246740, # sand
-        0, # trx
-        164545.48742559, # btt
-        0, # xrp
-        3060.94093686, # dka
-        173.66460848, # mlk
-        0.47666666, # aqt
-        1855.12241723, #med
-        0.00550091, #btc
-        250.37281553, #ada
-        0.09961308, # eth
-        0.14317678, # bch
-        0, # pci
-        0, # bora
-        0, #xlm
-        0,
-        0,
-        0,
-        0,
-        0
+        380.92350925, # ENJ
+        1830.30246740, # SAND
+        0, # TRX
+        164545.48742559, # BTT
+        0, # XRP
+        3060.94093686, # DKA
+        173.66460848, # MLK
+        0.47666666, # AQT
+        1855.12241723, # MED
+        0.00550091, # BTC
+        250.37281553, # ADA
+        0.09961308, # ETH
+        0.14317678, # BCH
+        0, # PCI
+        0, # BORA
+        0, # XLM
+        0, # XEM
+        0, # EOS
+        0, # STRAX
+        0, # PUNDIX
+        0 # MANA
     ]
     df_saved_data = pd.read_csv('saved_data.csv')
     now_prices = [-1]*(n) 
