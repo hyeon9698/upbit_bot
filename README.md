@@ -16,3 +16,4 @@
 - percent_list 정보 갱신
 - reset_dataset.csv 파일 정보 갱신
 - dataset.csv 파일 정보 갱신
+- pythonanywhere 에서 main.py, dataset.csv, reset_dataset.csv 업데이트
