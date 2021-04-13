@@ -148,20 +148,20 @@ prev_day = now.day
 yesterday_ma5 = [0]*(n)
 
 # 중간에 시작하더라도 아침 9시에 보유한 코인들을 팔 수 있게 만들었음
-print("----------현재 보유중인 코인 개수----------")
-for i in range(n):
-    time.sleep(0.1)
-    balance = upbit.get_balance(ticker=coin_list[i])
-    print("%8s"%coin_list[i]," -> ", balance, "개")
-    if balance > 0:
-        df.loc[i, 'hold'] = True
-        df.to_csv('dataset.csv', index=None)
-        hold[i] = True
-print("----------어제 ma5 가격----------")
-for i in range(n):
-    time.sleep(0.1)
-    yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
-    print(f"{'%8s'%coin_list[i]} -> {'%11.1f'%yesterday_ma5[i]} 원")
+# print("----------현재 보유중인 코인 개수----------")
+# for i in range(n):
+#     time.sleep(0.1)
+#     balance = upbit.get_balance(ticker=coin_list[i])
+#     print("%8s"%coin_list[i]," -> ", balance, "개")
+#     if balance > 0:
+#         df.loc[i, 'hold'] = True
+#         df.to_csv('dataset.csv', index=None)
+#         hold[i] = True
+# print("----------어제 ma5 가격----------")
+# for i in range(n):
+#     time.sleep(0.1)
+#     yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
+#     print(f"{'%8s'%coin_list[i]} -> {'%11.1f'%yesterday_ma5[i]} 원")
 
 # 중간에 시작하더라도 target 데이터와 money_list 데이터 op_mode, hold데이터 가지고 옴
 for i in range(n):
@@ -169,6 +169,7 @@ for i in range(n):
     money_list[i] = df.loc[i,'money_list']
     hold[i] = df.loc[i,'hold']
     op_mode[i] = df.loc[i,'op_mode']
+    yesterday_ma5[i] = df.loc[i,'yesterday_ma5']
 
 # 만약 코드를 실행할때 지금이 아침 8시가 지났을 경우 9시까지 거래를 안한다.
 ## 추후에 수정 필요 이걸 할지 안 할지 밤 새서 코드가 돌아가는 확신이 있으면 없애도 될듯
@@ -245,17 +246,16 @@ while True:
         print(msg)
         bot.sendMessage(mc,msg)
         save2 = False
-        print("어제 ma5 가격 갱신")
+        msg = "어제 ma5 가격 갱신\n"
         for i in range(n):
             time.sleep(0.1)
             yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
-            print(f"{'%8s'%coin_list[i]} -> {'%11.1f'%yesterday_ma5[i]} 원")
-        msg = ""
+            msg += '%8s'%coin_list[i] + " -> " + '%11.1f'%yesterday_ma5[i] + "원"
         for i in range(n):
             if yesterday_ma5[i] > target[i]:
                 msg += str(coin_list[i]) + "는 yesterday_ma5가 target보다 커서 안 사질 수도 있음 yesterday_ma5 -> " + str(yesterday_ma5[i]) + " target -> " + str(target[i]) + "\n"
-        if msg:
-            bot.sendMessage(mc,msg)
+        bot.sendMessage(mc,msg)
+        print(msg)
             
 
     # 현 가격 가져오기
