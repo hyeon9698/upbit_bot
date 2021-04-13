@@ -250,6 +250,8 @@ while True:
         for i in range(n):
             time.sleep(0.1)
             yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
+            df.loc[i, 'yesterday_ma5'] = yesterday_ma5[i]
+            df.to_csv('dataset.csv', index=None)
             msg += '%8s'%coin_list[i] + " -> " + '%11.1f'%yesterday_ma5[i] + "원"
         for i in range(n):
             if yesterday_ma5[i] > target[i]:
