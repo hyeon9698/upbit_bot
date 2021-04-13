@@ -253,7 +253,7 @@ while True:
         msg = ""
         for i in range(n):
             if yesterday_ma5[i] > target[i]:
-                msg += str(coin_list[i]) + "는 yesterday_ma5가 target보다 커서 안 사질 수도 있음 yesterday_ma5 -> " + yesterday_ma5[i] + " target -> " + target[i] + "\n"
+                msg += str(coin_list[i]) + "는 yesterday_ma5가 target보다 커서 안 사질 수도 있음 yesterday_ma5 -> " + str(yesterday_ma5[i]) + " target -> " + str(target[i]) + "\n"
         if msg:
             bot.sendMessage(mc,msg)
             
