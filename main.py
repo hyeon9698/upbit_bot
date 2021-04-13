@@ -182,7 +182,7 @@ if now.hour == 8:
     for i in range(n):
         if op_mode[i] and not hold[i]:
             time.sleep(0.1)
-            if target[i] < pyupbit.get_current_price(coin_list[i]):
+            if target[i] <= pyupbit.get_current_price(coin_list[i]):
                 flag = False
                 print(f"{coin_list[i]} 를 {money_list[i]} 만큼 구매 예정이었습니다. 그리고 오전 9시에 팔았을 겁니다.")
     if flag:
@@ -207,13 +207,13 @@ while True:
     if now.hour == 8 and now.minute == 59 and save1:
         time.sleep(1)
         for i in range(n):
-            sell(coin_list[i])
-            hold[i] = False
-            df.loc[i, 'hold'] = False
-            df.to_csv('dataset.csv', index=None)
-            op_mode[i] = False
-            df.loc[i, 'op_mode'] = False
-            df.to_csv('dataset.csv', index=None)
+            if hold[i]:
+                sell(coin_list[i])
+                hold[i] = False
+                df.loc[i, 'hold'] = False
+                op_mode[i] = False
+                df.loc[i, 'op_mode'] = False
+                df.to_csv('dataset.csv', index=None)
         print('----------전부 매도 완료----------')
 
         # 매도가 다 되고 나서
@@ -236,7 +236,6 @@ while True:
         for i in range(n):            
             target[i] = cal_target(coin_list[i])
             df.loc[i, 'target'] = target[i]
-            df.to_csv('dataset.csv', index=None)
             op_mode[i] = True
             df.loc[i, 'op_mode'] = True
             df.to_csv('dataset.csv', index=None)
