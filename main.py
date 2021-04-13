@@ -32,7 +32,7 @@ def buy(ticker, money):
 def printall():
     print(f"------------------------------{now.strftime('%Y-%m-%d %H:%M:%S')}------------------------------" )
     for i in range(n):
-        print(f"{'%8s'%coin_list[i]} 목표가: {'%11.1f'%target[i]} 현재가: {'%11.1f'%prices[i]} 매수금액: {'%7d'%money_list[i]} hold: {'%5s'%hold[i]} status: {op_mode[i]}")
+        print(f"{'%10s'%coin_list[i]} 목표가: {'%11.1f'%target[i]} 현재가: {'%11.1f'%prices[i]} 매수금액: {'%7d'%money_list[i]} hold: {'%5s'%hold[i]} status: {op_mode[i]}")
 def save_data(krw_balance):
     own_coin_list_04_08 = [
         380.92350925, # ENJ
