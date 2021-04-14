@@ -234,11 +234,12 @@ while True:
         print(msg)
         bot.sendMessage(mc,msg)
         save_data(krw_balance)
-        save1 = False        
+        save1 = False
+        now = datetime.now(timezone('Asia/Seoul'))
 
     # 09:00:00 목표가 갱신
     if now.hour == 9 and now.minute == 0 and save2:
-        for i in range(n):            
+        for i in range(n):
             target[i] = cal_target(coin_list[i])
             df.loc[i, 'target'] = target[i]
             op_mode[i] = True
