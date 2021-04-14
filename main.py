@@ -66,7 +66,8 @@ def save_data(krw_balance):
         0, # HBAR
         0, # SNT
         0, # VET
-        0 # STX
+        0, # STX
+        0 # SC
     ]
     df_saved_data = pd.read_csv('saved_data.csv')
     now_prices = [-1]*(n) 
@@ -139,12 +140,13 @@ df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_auto
 # SNT
 # VET
 # STX
+# SC
 INF = 1000000000000
 coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK", 
             "KRW-AQT", "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", 
             "KRW-BORA", "KRW-XLM", "KRW-XEM", "KRW-EOS", "KRW-STRAX", "KRW-PUNDIX", 
-            "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX"]
-percent_list = [0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04]
+            "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX", "KRW-SC"]
+percent_list = [0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04]
 n = len(coin_list)
 money_list = [0]*(n)
 op_mode = [False] * (n) # 당일 9시에 코드를 시작하지 않았을 경우를 위한 변수
