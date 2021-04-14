@@ -191,7 +191,7 @@ if now.hour == 8:
                 flag = False
                 print(f"{coin_list[i]} 를 {money_list[i]} 만큼 구매 예정이었습니다. 그리고 오전 9시에 팔았을 겁니다.")
     if flag:
-        print("아무일도 일어나지 않았습니다. save guard가 실행됩니다. 9시가 되면 리셋 됩니다.")
+        print("아무일도 일어나지 않았습니다. save guard가 실행됩니다. status는 False가 됩니다. 9시가 되면 리셋 됩니다.")
     for i in range(n):
         op_mode[i] = False
         df.loc[i,'op_mode'] = False
