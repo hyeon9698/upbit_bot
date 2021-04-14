@@ -256,7 +256,7 @@ while True:
             yesterday_ma5[i] = get_yesterday_ma5(coin_list[i])
             df.loc[i, 'yesterday_ma5'] = yesterday_ma5[i]
             df.to_csv('dataset.csv', index=None)
-            msg += '%8s'%coin_list[i] + " -> " + '%11.1f'%yesterday_ma5[i] + "원"
+            msg += '%8s'%coin_list[i] + " -> " + '%11.1f'%yesterday_ma5[i] + "원\n"
         for i in range(n):
             if yesterday_ma5[i] > target[i]:
                 msg += str(coin_list[i]) + "는 yesterday_ma5가 target보다 커서 안 사질 수도 있음 yesterday_ma5 -> " + str(yesterday_ma5[i]) + " target -> " + str(target[i]) + "\n"
