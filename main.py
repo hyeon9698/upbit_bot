@@ -225,7 +225,7 @@ while True:
         time.sleep(0.1)
         krw_balance = upbit.get_balance("KRW")
         for i in range(n):
-            money_list[i] = int(krw_balance * (percent_list[i]+0.07))
+            money_list[i] = int(krw_balance * (percent_list[i]+0.06))
             df.loc[i, 'money_list'] = money_list[i]
             df.to_csv('dataset.csv', index=None)
         msg = "----------매수할 돈 정보 갱신(money_list)----------\n"
