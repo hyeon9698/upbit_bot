@@ -148,7 +148,7 @@ coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", 
             "KRW-AQT", "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", 
             "KRW-BORA", "KRW-XLM", "KRW-XEM", "KRW-EOS", "KRW-STRAX", "KRW-PUNDIX", 
             "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX", "KRW-SC", "KRW-CRO"]
-percent_list = [0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 0.04]
+percent_list = [0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
 n = len(coin_list)
 money_list = [0]*(n)
 op_mode = [False] * (n) # 당일 9시에 코드를 시작하지 않았을 경우를 위한 변수
@@ -235,7 +235,7 @@ while True:
         time.sleep(0.1)
         krw_balance = upbit.get_balance("KRW")
         for i in range(n):
-            money_list[i] = int(krw_balance * (percent_list[i]+0.06))
+            money_list[i] = int(krw_balance * percent_list[i])
             df.loc[i, 'money_list'] = money_list[i]
             df.to_csv('dataset.csv', index=None)
         msg = "----------매수할 돈 정보 갱신(money_list)----------\n"
