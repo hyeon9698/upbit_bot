@@ -252,7 +252,7 @@ while True:
         now = datetime.now(timezone('Asia/Seoul'))
 
     # 09:00:00 목표가 갱신
-    if now.hour == 9 and now.minute == 0 and save2:
+    if now.hour == 9 and now.minute == 0 and now.second > 30 and save2:
         for i in range(n):
             target[i] = cal_target(coin_list[i])
             df.loc[i, 'target'] = target[i]
