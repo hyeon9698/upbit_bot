@@ -1,5 +1,6 @@
 # upbit_bot
 ## 비트코인 매매 자동화 프로그램
+- [참고 책](https://wikidocs.net/book/1665)
 - [virtualenv 코드 관련 사이트](https://dgkim5360.tistory.com/entry/python-virtualenv-on-linux-ubuntu-and-windows)
 - pythonanywhere 사이트를 이용했음
 - 순서대로 코드 작성하기
