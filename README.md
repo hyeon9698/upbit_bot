@@ -1,6 +1,7 @@
 # upbit_bot 가상화폐 변동성 돌파 전략 프로그램 (업비트용)
 ## 가상화폐 매매 자동화 프로그램
-- [참고 책](https://wikidocs.net/book/1665)
+- 참고 책: [파이썬을 이용한 비트코인 자동매매 (개정판)](https://wikidocs.net/book/1665) ![image](https://user-images.githubusercontent.com/41141851/115146002-a4c3e080-a08f-11eb-85bc-122ee056a2c0.png)
+- 참고 코드: [파이썬을 이용한 비트코인 자동매매](https://github.com/sharebook-kr/book-cryptocurrency) (Apache License 2.0)
 - 비트코인 + 알트코인을 자동으로 매매해 주는 봇 + 실시간 진행 상황을 Telegram으로 문자 전송 + 데이터를 쌓아서 실제로 얼마를 벌었는지 비교
 ### 실행방법
 - [virtualenv 코드 참고 사이트](https://dgkim5360.tistory.com/entry/python-virtualenv-on-linux-ubuntu-and-windows)
