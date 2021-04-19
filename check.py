@@ -50,7 +50,7 @@ while True:
     if prev_day != now.day:
         prev_day = now.day
         save = True
-        msg = "save 변수가 True로 업데이트 됐습니다.\nsave1: " + str(save)
+        msg = "save 변수가 True로 업데이트 됐습니다.\nsave: " + str(save)
         print(msg)
         bot.sendMessage(mc,msg)
     
