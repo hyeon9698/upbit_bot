@@ -23,6 +23,15 @@ python main.py
 ```
 #### check.py
 ```python
+# 깃허브 클론
+git clone https://github.com/hyeon9698/upbit_bot
+cd upbit_bot
+# 가상 환경 세팅
+pip3 install virtualenv
+virtualenv upbit --python=python3.8
+source upbit/bin/activate
+# 필요한 requirments 다운
+pip install -r requirements.txt
 # 메인 코드 실행
 python check.py
 ```
