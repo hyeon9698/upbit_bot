@@ -147,12 +147,21 @@ df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_auto
 # CRO
 # NEO
 # GAS
+# --------------------------------------------
+# main coins
+# SAND
+# ENJ
+# BTT
+# MED
+
 INF = 1000000000000
 coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK", 
             "KRW-AQT", "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", 
             "KRW-BORA", "KRW-XLM", "KRW-XEM", "KRW-EOS", "KRW-STRAX", "KRW-PUNDIX", 
-            "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX", "KRW-SC", "KRW-CRO", "KRW-NEO", "KRW-GAS"]
-percent_list = [0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08]
+            "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX", 
+            "KRW-SC", "KRW-CRO", "KRW-NEO", "KRW-GAS"]
+percent_list = [0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03]
+skip_list = ["KRW-SAND", "KRW-ENJ", "KRW-BTT", "KRW-MED", "KRW-XRP", "KRW-ADA", "KRW-ETH", "KRW-BTC"]
 n = len(coin_list)
 money_list = [0]*(n)
 op_mode = [False] * (n) # 당일 9시에 코드를 시작하지 않았을 경우를 위한 변수
@@ -188,6 +197,10 @@ for i in range(n):
     money_list[i] = df.loc[i,'money_list']
     hold[i] = df.loc[i,'hold']
     op_mode[i] = df.loc[i,'op_mode']
+    if coin_list[i] in skip_list:
+        op_mode[i] = False
+        df.loc[i,'op_mode'] = False
+        df.to_csv('dataset.csv', index=None)
     yesterday_ma5[i] = df.loc[i,'yesterday_ma5']
 
 # 만약 코드를 실행할때 지금이 아침 8시가 지났을 경우 9시까지 거래를 안한다.
@@ -226,7 +239,7 @@ while True:
     if now.hour == 8 and now.minute == 59 and save1:
         time.sleep(1)
         for i in range(n):
-            if hold[i]:
+            if hold[i] and op_mode[i]:
                 sell(coin_list[i])
                 hold[i] = False
                 df.loc[i, 'hold'] = False
@@ -259,6 +272,10 @@ while True:
             op_mode[i] = True
             df.loc[i, 'op_mode'] = True
             df.to_csv('dataset.csv', index=None)
+            if coin_list[i] in skip_list:
+                op_mode[i] = False
+                df.loc[i, 'op_mode'] = False
+                df.to_csv('dataset.csv', index=None)
         msg = "----------목표가 갱신(target)----------\n"
         for i in range(n):
             msg += coin_list[i] + " " + str(target[i])+"원"+"\n"
