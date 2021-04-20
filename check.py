@@ -70,7 +70,7 @@ while True:
             prices_open[i] = pyupbit.get_ohlcv(coin_list[i], "day").iloc[-1]['open']
             prices_high_15[i] = prices_open[i] + prices_open[i] * 0.15
             prices_low_15[i] = prices_open[i] - prices_open[i] * 0.15
-            msg += f'4%s{coin_list} -> {prices_open[i]}원\n'
+            msg += f'{"4%s"%coin_list[i]} -> {prices_open[i]}원\n'
             time.sleep(0.1)
         print(msg)
         bot.sendMessage(mc,msg)
