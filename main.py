@@ -28,8 +28,8 @@ def buy(ticker, money):
     b = upbit.buy_market_order(ticker, money)
     try:
         if b['error']:
-            b = upbit.buy_market_order(ticker, 300000)
-            msg = "돈 좀 부족해서 " + str(ticker)+" "+str(300000)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
+            b = upbit.buy_market_order(ticker, 100000)
+            msg = "돈 좀 부족해서 " + str(ticker)+" "+str(100000)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
     except:
         msg = str(ticker)+" "+str(money)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
     print(msg)
@@ -40,19 +40,19 @@ def printall():
         print(f"{'%10s'%coin_list[i]} 목표가: {'%11.1f'%target[i]} 현재가: {'%11.1f'%prices[i]} 매수금액: {'%7d'%money_list[i]} hold: {'%5s'%hold[i]} status: {op_mode[i]}")
 def save_data(krw_balance):
     own_coin_list_04_08 = [
-        380.92350925, # ENJ
-        1830.30246740, # SAND
+        175, # ENJ
+        3126, # SAND
         0, # TRX
-        164545.48742559, # BTT
-        0, # XRP
-        3060.94093686, # DKA
-        173.66460848, # MLK
-        0.47666666, # AQT
-        1855.12241723, # MED
-        0.00550091, # BTC
-        250.37281553, # ADA
+        164614.48742559, # BTT
+        677.52818233, # XRP
+        602.4096, # DKA
+        184.9801, # MLK
+        0, # AQT
+        15080, # MED
+        0.00133972, # BTC
+        695.93, # ADA
         0.09961308, # ETH
-        0.14317678, # BCH
+        0, # BCH
         0, # PCI
         0, # BORA
         0, # XLM
@@ -160,8 +160,8 @@ coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", 
             "KRW-BORA", "KRW-XLM", "KRW-XEM", "KRW-EOS", "KRW-STRAX", "KRW-PUNDIX", 
             "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX", 
             "KRW-SC", "KRW-CRO", "KRW-NEO", "KRW-GAS"]
-percent_list = [0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03, 0.03]
-skip_list = ["KRW-SAND", "KRW-ENJ", "KRW-BTT", "KRW-MED", "KRW-XRP", "KRW-ADA", "KRW-ETH", "KRW-BTC"]
+percent_list = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+skip_list = []
 n = len(coin_list)
 money_list = [0]*(n)
 op_mode = [False] * (n) # 당일 9시에 코드를 시작하지 않았을 경우를 위한 변수
@@ -170,6 +170,7 @@ target = [INF]*(n)
 prices = [-1]*(n)
 save1 = True
 save2 = True
+time_save = True
 krw_balance = 0
 now = datetime.now(timezone('Asia/Seoul'))
 prev_day = now.day
@@ -226,7 +227,9 @@ if now.hour == 8:
 while True:
     # 지금 한국 시간
     now = datetime.now(timezone('Asia/Seoul'))
-    
+    if not time_save:
+        if (now.hour-1)%6 == 0:
+            time_save = True
     # 하루에 한번 작동하는 save
     if prev_day != now.day:
         prev_day = now.day
@@ -300,10 +303,13 @@ while True:
     for i in range(n):
         prices[i] = pyupbit.get_current_price(coin_list[i])
         time.sleep(0.1)  # 실행할때는 주석처리하기
-
+    ################################################################################################
+    ################################################################################################
+    ############ yesterday_ma5 주석처리상태임
+    ################################################################################################
     # 매초마다 조건을 확인한 후 매수 시도
     for i in range(n):
-        if op_mode[i] and not hold[i] and prices[i] >= target[i] and prices[i] >= yesterday_ma5[i]:
+        if op_mode[i] and not hold[i] and prices[i] >= target[i]: #and prices[i] >= yesterday_ma5[i]:
             # 매수
             buy(coin_list[i], money_list[i])
             hold[i] = True
@@ -313,5 +319,9 @@ while True:
 
     # 상태 출력
     printall()
+    if (now.hour % 6) == 0 and time_save:
+        time_save = False
+        msg = f"지금 {now.hour}시입니다. 코드가 잘 실행되고 있습니다."
+        bot.sendMessage(mc,msg)
 msg = "while문 밖으로 나왔습니다 확인해주세요"
 bot.sendMessage(mc,msg)
