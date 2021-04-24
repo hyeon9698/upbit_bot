@@ -18,8 +18,8 @@ def buy(ticker, money):
     b = upbit.buy_market_order(ticker, money)
     try:
         if b['error']:
-            b = upbit.buy_market_order(ticker, 200000)
-            msg = "돈 좀 부족해서 " + str(ticker)+" "+str(200000)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
+            b = upbit.buy_market_order(ticker, 50000)
+            msg = "돈 좀 부족해서 " + str(ticker)+" "+str(50000)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
     except:
         msg = str(ticker)+" "+str(money)+"원 매수시도"+"\n"+json.dumps(b, ensure_ascii = False)
     print(msg)
@@ -55,9 +55,9 @@ coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", 
 # percent_list = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
 
 n = len(coin_list)
-coin_wait_15 = [True]*n
+coin_waiting_15 = [True]*n
 hold = [True]*n
-money_list = [500000]*n
+money_list = [200000]*n
 save = False
 ma15 = [0]*n
 high = [0]*n
@@ -68,7 +68,7 @@ df = pd.read_csv('ma15_main.csv')
 #############새롭게 시작하는거면 이 부분 주석처리하기###################
 for i in range(n):
     hold[i] = df.loc[i, 'hold']
-    coin_wait_15[i] = df.loc[i, 'coin_wait_15']
+    coin_waiting_15[i] = df.loc[i, 'coin_waiting_15']
 #####################################################################
 
 for i in range(n):
@@ -90,8 +90,8 @@ while True:
         for i in range(n):
             time.sleep(0.1)
             ma15[i], high[i] = get_ma15_high(coin_list[i])
-            coin_wait_15[i] = True
-            df.loc[i, 'coin_wait_15'] = True
+            coin_waiting_15[i] = False
+            df.loc[i, 'coin_waiting_15'] = False
             df.to_csv('ma15_main.csv', index=None)
         save = True
         print("------------------------------ma15와 high 갱신------------------------------")
@@ -104,16 +104,18 @@ while True:
         if not hold[i] and ma15[i] <= price_now[i]:
             buy(coin_list[i], money_list[i])
             hold[i] = True
+            coin_waiting_15[i] = True
             df.loc[i, 'hold'] = True
+            df.loc[i, 'coin_waiting_15'] = True
             df.to_csv('ma15_main.csv', index=None)
     
     for i in range(n):
-        if hold[i] and ma15[i] > high[i] and coin_wait_15[i]:
+        if hold[i] and ma15[i] > high[i] and not coin_waiting_15[i]:
             sell(coin_list[i])
             hold[i] = False
-            coin_wait_15[i] = False
+            coin_waiting_15[i] = True
             df.loc[i, 'hold'] = False
-            df.loc[i, 'coin_wait_15'] = False
+            df.loc[i, 'coin_waiting_15'] = True
             df.to_csv('ma15_main.csv', index=None)
     printall()
 
@@ -122,4 +124,4 @@ while True:
         msg = f"지금 {now.hour}시입니다. 코드가 잘 실행되고 있습니다."
         bot.sendMessage(mc,msg)
         
-    time.sleep(1)
+    # time.sleep(0.1)
