@@ -47,17 +47,17 @@ mc = os.getenv('TELEGRAM_API_MC')
 bot = telegram.Bot(token)
 df = pd.read_csv('dataset.csv')
 
-# 31 coins
+# 32 coins
 coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK", "KRW-AQT", "KRW-MED", "KRW-BTC", 
             "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", "KRW-BORA", "KRW-XLM", "KRW-XEM", "KRW-EOS", "KRW-STRAX", "KRW-PUNDIX", 
             "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX", "KRW-SC", "KRW-CRO", "KRW-NEO",
-            "KRW-GAS"]
+            "KRW-GAS", "KRW-DOGE"]
 # percent_list = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
 
 n = len(coin_list)
 coin_waiting_15 = [True]*n
 hold = [True]*n
-money_list = [200000]*n
+money_list = [100000]*n
 save = False
 ma15 = [0]*n
 high = [0]*n
