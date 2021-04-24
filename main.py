@@ -173,6 +173,7 @@ target = [INF]*(n)
 prices = [-1]*(n)
 save1 = True
 save2 = True
+save3 = True
 time_save = True
 krw_balance = 0
 now = datetime.now(timezone('Asia/Seoul'))
@@ -239,8 +240,15 @@ while True:
             prev_day = now.day
             save1 = True
             save2 = True
-            msg = "save 변수가 True로 업데이트 됐습니다.\nsave1: " + str(save1) + " save2 -> " + str(save2)
+            save3 = True
+            msg = "save 변수가 True로 업데이트 됐습니다.\nsave1: " + str(save1) + " save2 -> " + str(save2) + " save3 -> " + str(save3)
             bot.sendMessage(mc,msg)
+        # 8시 50분에 코드가 실행 중인지 확인
+        if now.hour == 8 and now.minute == 50 and save3:
+            msg = "코드가 정상 실행 중입니다."
+            bot.sendMessage(mc,msg)
+            save3 = False
+
 
         # 매도 시도
         if now.hour == 8 and now.minute == 59 and save1:
