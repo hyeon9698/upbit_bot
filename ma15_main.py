@@ -47,11 +47,11 @@ mc = os.getenv('TELEGRAM_API_MC')
 bot = telegram.Bot(token)
 df = pd.read_csv('dataset.csv')
 
-coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK", 
-            "KRW-AQT", "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", 
-            "KRW-BORA", "KRW-XLM", "KRW-XEM", "KRW-EOS", "KRW-STRAX", "KRW-PUNDIX", 
-            "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX", 
-            "KRW-SC", "KRW-CRO", "KRW-NEO", "KRW-GAS"]
+# 31 coins
+coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK", "KRW-AQT", "KRW-MED", "KRW-BTC", 
+            "KRW-ADA", "KRW-ETH", "KRW-BCH", "KRW-PCI", "KRW-BORA", "KRW-XLM", "KRW-XEM", "KRW-EOS", "KRW-STRAX", "KRW-PUNDIX", 
+            "KRW-MANA", "KRW-STRK", "KRW-QTUM", "KRW-HBAR", "KRW-SNT", "KRW-VET", "KRW-STX", "KRW-SC", "KRW-CRO", "KRW-NEO",
+            "KRW-GAS"]
 # percent_list = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
 
 n = len(coin_list)
@@ -63,6 +63,13 @@ ma15 = [0]*n
 high = [0]*n
 price_now = [0]*n
 time_save = True
+df = pd.read_csv('ma15_main.csv')
+
+#############새롭게 시작하는거면 이 부분 주석처리하기###################
+for i in range(n):
+    hold[i] = df.loc[i, 'hold']
+    coin_wait_15[i] = df.loc[i, 'coin_wait_15']
+#####################################################################
 
 for i in range(n):
     time.sleep(0.1)
@@ -71,21 +78,23 @@ for i in range(n):
 while True:
     # 지금 한국 시간
     now = datetime.now(timezone('Asia/Seoul'))
+
     if not time_save:
         if (now.hour-1) % 6 == 0:
             time_save = True
 
     if save and (now.minute-1) % 15 == 0:
         save = False
-        print("save", save)
     
     if not save and now.minute % 15 == 0 and now.second >= 20:
         for i in range(n):
             time.sleep(0.1)
             ma15[i], high[i] = get_ma15_high(coin_list[i])
             coin_wait_15[i] = True
+            df.loc[i, 'coin_wait_15'] = True
+            df.to_csv('ma15_main.csv', index=None)
         save = True
-        print("@@@@@@@@@@@@@@@ma15와 high 갱신@@@@@@@@@@@@@@@")
+        print("------------------------------ma15와 high 갱신------------------------------")
     
     for i in range(n):
         time.sleep(0.1)
@@ -95,13 +104,17 @@ while True:
         if not hold[i] and ma15[i] <= price_now[i]:
             buy(coin_list[i], money_list[i])
             hold[i] = True
+            df.loc[i, 'hold'] = True
+            df.to_csv('ma15_main.csv', index=None)
     
     for i in range(n):
         if hold[i] and ma15[i] > high[i] and coin_wait_15[i]:
             sell(coin_list[i])
             hold[i] = False
             coin_wait_15[i] = False
-    
+            df.loc[i, 'hold'] = False
+            df.loc[i, 'coin_wait_15'] = False
+            df.to_csv('ma15_main.csv', index=None)
     printall()
 
     if (now.hour % 6) == 0 and time_save:
