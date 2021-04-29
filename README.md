@@ -42,3 +42,5 @@ python check.py
 - reset_dataset.csv 파일 정보 갱신
 - dataset.csv 파일 정보 갱신
 - pythonanywhere 에서 main.py, dataset.csv, reset_dataset.csv 업데이트
+
+#### 투자의 책임은 투자자 본인에게 있습니다.
