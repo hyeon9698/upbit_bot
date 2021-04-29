@@ -1,4 +1,4 @@
-coin,target,money_list,hold,op_mode,yesterday_ma5,open_price
+coin,target,money_list,hold,op_mode,yesterday_ma15,open_price
 ENJ,1000000000000000,-1,False,False,0,0
 SAND,1000000000000000,-1,False,False,0,0
 TRX,1000000000000000,-1,False,False,0,0
@@ -23,3 +23,4 @@ VET,1000000000000000,-1,False,False,0,0
 NEO,1000000000000000,-1,False,False,0,0
 GAS,1000000000000000,-1,False,False,0,0
 DOGE,1000000000000000,-1,False,False,0,0
+STRK,1000000000000000,-1,False,False,0,0
