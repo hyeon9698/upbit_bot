@@ -25,7 +25,7 @@ coin_list = ["KRW-ENJ", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK",
 
 days = 1
 k_range = [0.4,0.5,0.6]
-ma_range = [0,5,10]
+ma_range = [0,5,10,15]
 total_list = []
 values = []
 dfs = []
