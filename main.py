@@ -39,119 +39,83 @@ def printall():
     for i in range(n):
         msg += f"{'%10s'%coin_list[i]} 목표가: {'%11.1f'%target[i]} 현재가: {'%11.1f'%prices[i]} 매수금액: {'%7d'%money_list[i]} hold: {'%5s'%hold[i]} status: {op_mode[i]}\n"
     print(msg)
-def save_data(krw_balance):
-    own_coin_list_04_08 = [
-        175, # ENJ
-        3126, # SAND
-        0, # TRX
-        164614.48742559, # BTT
-        677.52818233, # XRP
-        602.4096, # DKA
-        184.9801, # MLK
-        0, # AQT
-        15080, # MED
-        0.00133972, # BTC
-        695.93, # ADA
-        0.09961308, # ETH
-        0, # PCI
-        0, # BORA
-        0, # XEM
-        0, # EOS
-        0, # PUNDIX
-        0, # MANA
-        0, # QTUM
-        0, # HBAR
-        0, # VET
-        0, # NEO
-        0, # GAS
-        0, # DOGE
-        0 # STRK
-    ]
-    df_saved_data = pd.read_csv('saved_data.csv')
-    now_prices = [-1]*(n) 
-    jonbeo = "----------들고만 있었으면----------\n"
-    total_jonbeo = 0
-    auto_upbit = "----------자동화----------\n"
-    auto_upbit += "자동화 총 금액 -> " + str(krw_balance) + "\n"
-    for i in range(n):
-        now_prices[i] = pyupbit.get_current_price(coin_list[i])
-        total_jonbeo += now_prices[i]*own_coin_list_04_08[i]
-        jonbeo += coin_list[i] + " 현 가격: " + str(now_prices[i]) + "이 코인의 총 가격" + str(now_prices[i]*own_coin_list_04_08[i]) + "\n"
-        time.sleep(0.1)
-    # total_jonbeo += 1610370
-    jonbeo += "지금까지 존버했으면 총 금액 -> " + str(total_jonbeo) + "\n"
-    msg = jonbeo + auto_upbit + "존버와의 금액 차이 -> " + str(krw_balance - total_jonbeo) + "원 벌었음(-이면 잃은거)\n"
-    try:
-        dif_yesterday = krw_balance - df_saved_data.iloc[-1]['auto_upbit']
-        msg += "!!어제와의 금액 차이!!: " + str(dif_yesterday)
-        df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit','difference_yesterday'])
-        df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo,'difference_yesterday':dif_yesterday}, ignore_index=True)
-        df2.to_csv('saved_data.csv', mode='a', header=False)
-    except:        
-        df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
-        df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo}, ignore_index=True)
-        df2.to_csv('saved_data.csv', mode='a', header=False)
-    print(msg)
-    bot.sendMessage(mc,msg)
+# def save_data(krw_balance):
+#     own_coin_list_04_08 = [
+#         175, # ENJ
+#         3126, # SAND
+#         0, # TRX
+#         164614.48742559, # BTT
+#         677.52818233, # XRP
+#         602.4096, # DKA
+#         184.9801, # MLK
+#         0, # AQT
+#         15080, # MED
+#         0.00133972, # BTC
+#         695.93, # ADA
+#         0.09961308, # ETH
+#         0, # PCI
+#         0, # BORA
+#         0, # XEM
+#         0, # EOS
+#         0, # PUNDIX
+#         0, # MANA
+#         0, # QTUM
+#         0, # HBAR
+#         0, # VET
+#         0, # NEO
+#         0, # GAS
+#         0, # DOGE
+#         0 # STRK
+#     ]
+#     df_saved_data = pd.read_csv('saved_data.csv')
+#     now_prices = [-1]*(n) 
+#     jonbeo = "----------들고만 있었으면----------\n"
+#     total_jonbeo = 0
+#     auto_upbit = "----------자동화----------\n"
+#     auto_upbit += "자동화 총 금액 -> " + str(krw_balance) + "\n"
+#     for i in range(n):
+#         now_prices[i] = pyupbit.get_current_price(coin_list[i])
+#         total_jonbeo += now_prices[i]*own_coin_list_04_08[i]
+#         jonbeo += coin_list[i] + " 현 가격: " + str(now_prices[i]) + "이 코인의 총 가격" + str(now_prices[i]*own_coin_list_04_08[i]) + "\n"
+#         time.sleep(0.1)
+#     # total_jonbeo += 1610370
+#     jonbeo += "지금까지 존버했으면 총 금액 -> " + str(total_jonbeo) + "\n"
+#     msg = jonbeo + auto_upbit + "존버와의 금액 차이 -> " + str(krw_balance - total_jonbeo) + "원 벌었음(-이면 잃은거)\n"
+#     try:
+#         dif_yesterday = krw_balance - df_saved_data.iloc[-1]['auto_upbit']
+#         msg += "!!어제와의 금액 차이!!: " + str(dif_yesterday)
+#         df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit','difference_yesterday'])
+#         df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo,'difference_yesterday':dif_yesterday}, ignore_index=True)
+#         df2.to_csv('saved_data.csv', mode='a', header=False)
+#     except:        
+#         df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
+#         df2 = df2.append({'date':now.strftime('%Y-%m-%d %H:%M:%S'), 'jonbeo':total_jonbeo, 'auto_upbit': krw_balance, 'difference_jonbeo_autoupbit':krw_balance - total_jonbeo}, ignore_index=True)
+#         df2.to_csv('saved_data.csv', mode='a', header=False)
+#     print(msg)
+#     bot.sendMessage(mc,msg)
 def get_yesterday_ma15(ticker):
     df_get_yesterday_ma15 = pyupbit.get_ohlcv(ticker)
     close = df_get_yesterday_ma15['close']
     ma = close.rolling(window=10).mean()
     return ma[-2]
+
 # 객체 생성
 load_dotenv()
-access = os.getenv('UPBIT_API_ACCESS_KEY')
-secret = os.getenv('UPBIT_API_SECRET_KEY')
+access = "여기에 upbit-access-key 넣어주세요"
+secret = "여기에 upbit-secret-key 넣어주세요"
 upbit = pyupbit.Upbit(access, secret)
-token = os.getenv('TELEGRAM_API_TOKEN_KEY')
-mc = os.getenv('TELEGRAM_API_MC')
+token = "여기에 telegram-token-key 넣어주세요"
+mc = "여기에 telegram-mc-key 넣어주세요"
 bot = telegram.Bot(token)
 df = pd.read_csv('dataset.csv')
 df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
 df3 = pd.DataFrame(columns=['date','coin','VAL_value','sell_price'])
-# 변수 설정
-# 총 16개
-# ENJ 엔진코인 18%
-# SAND 샌드박스 18%
-# TRX 트론 18%
-# BTT 비트토렌트 10%
-# XRP 리플 3%
-# DKA 디카르고 3%
-# MLK 밀크 3%
-# AQT 알파쿼크 3%
-# MED 메디블록 3%
-# BTC 비트코인 3%
-# ADA 에이다 3%
-# ETH 이더리움 3%
-# PCI 페이코인 3%
-# BORA 보라 3%
-# XEM
-# EOS
-# PUNDIX
-# MANA
-# QTUM
-# HBAR
-# VET
-# NEO
-# GAS
-# DOGE
-# STRK
-# --------------------------------------------
-# main coins
-# SAND
-# ENJ
-# BTT
-# MED
 
+# 변수 설정
 INF = 1000000000000
-coin_list = ["KRW-ENJ", "KRW-SAND", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK", 
-            "KRW-AQT", "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-PCI", 
-            "KRW-BORA", "KRW-XEM", "KRW-EOS", "KRW-PUNDIX", 
-            "KRW-MANA", "KRW-QTUM", "KRW-HBAR", "KRW-VET", 
-            "KRW-NEO", "KRW-GAS", "KRW-DOGE", "KRW-STRK"]
+coin_list = ["KRW-BTC", "KRW-ETH", "KRW-DOGE"]
 n = len(coin_list)
-# percent_list = [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
-percent_list = [0.05]*n
+percent_list = [0.05]*n # 가진 돈의 5프로씩만 투자함
 skip_list = []
 n = len(coin_list)
 money_list = [0]*(n)
@@ -241,7 +205,7 @@ while True:
                 msg += coin_list[i] + " " + str(money_list[i])+"원"+"\n"
             print(msg)
             bot.sendMessage(mc,msg)
-            save_data(krw_balance)
+            # save_data(krw_balance)
             save1 = False
             now = datetime.now(timezone('Asia/Seoul'))
 
