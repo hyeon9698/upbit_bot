@@ -18,7 +18,7 @@ bot = telegram.Bot(token)
 df = pd.read_csv('check_dataset.csv')
 
 # 필요 변수 초기화
-coin_list = ["KRW-BTC", "KRW-XRP"]
+coin_list = ["KRW-BTC", "KRW-ETH", "KRW-DOGE"]
 n = len(coin_list)
 prices_prev = [0]*(n)
 prices_now = [0]*(n)

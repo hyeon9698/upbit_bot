@@ -16,12 +16,7 @@ access = os.getenv('UPBIT_API_ACCESS_KEY')
 secret = os.getenv('UPBIT_API_SECRET_KEY')
 upbit = pyupbit.Upbit(access, secret)
 
-
-coin_list = ["KRW-ENJ", "KRW-TRX", "KRW-BTT", "KRW-XRP", "KRW-DKA", "KRW-MLK",
-            "KRW-MED", "KRW-BTC", "KRW-ADA", "KRW-ETH", "KRW-PCI",
-            "KRW-BORA", "KRW-XEM", "KRW-EOS", "KRW-PUNDIX", 
-            "KRW-MANA", "KRW-QTUM", "KRW-HBAR", "KRW-VET", 
-            "KRW-NEO", "KRW-GAS", "KRW-DOGE", "KRW-STRK", "KRW-ANKR"]
+coin_list = ["KRW-BTC", "KRW-ETH", "KRW-DOGE"]
 
 days = 1
 k_range = [0.4,0.5,0.6]
