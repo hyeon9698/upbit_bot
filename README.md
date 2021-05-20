@@ -8,7 +8,7 @@
 3. compair.py -> 실재로 존버를 했을 경우와 변동성 돌파 전략을 사용했을 경우를 비교하는 코드
 ### 실행방법
 
-[https://www.upbit.com/service_center/open_api_guide](https://www.upbit.com/service_center/open_api_guide) 사이트에서 로그인을 한 후 (구글에 upbit api 치시면 바로 나옵니다.)
+[https://www.upbit.com/service_center/open_api_guide](https://www.upbit.com/service_center/open_api_guide) 사이트에서 upbit API key를 가지고 옵니다. (구글에 upbit api 치시면 바로 나옵니다.)
 
 ![test](https://user-images.githubusercontent.com/41141851/118991825-080e9e80-b9bf-11eb-9f74-8e9bb6584138.png)
 
