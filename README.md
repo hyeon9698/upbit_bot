@@ -35,8 +35,7 @@ Open API 사용하기를 클릭해서 로그인을 합니다.
 
 vscode 또는 pythonanywhere 사이트에서 아래 코드를 진행을 합니다.
 
-### [main.py](http://main.py/)
-
+### main.py
 ```python
 # 깃허브 클론
 git clone <https://github.com/hyeon9698/upbit_bot>
@@ -67,12 +66,14 @@ python main.py
 
 참고로 해당 코드는 k값은 0.5이고 이동평균은 5일을 보고 지금 가격이 target을 넘었을 경우 & 지금 가격이 이동평균 보다 높을 경우 구매를 합니다.
 
-check.py
+### check.py
 ```python
 # 메인 코드 실행
 python check.py
 ```
+실시간으로 몇 프로 올랐고 내렸고를 확인 할 수 있습니다.
 
+### compair.py
 ![test](https://user-images.githubusercontent.com/41141851/118996709-0f37ab80-b9c3-11eb-9824-5e8a48d87688.png)
 compair.py 코드를 통해 2주동안 존버를 했을 경우와 변동성 돌파를 사용한 결과를 비교를 해 봤습니다. (2021.05.20 기준)
 존버를 했을 경우 -22.92% 손해를 입고
