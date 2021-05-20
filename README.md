@@ -73,6 +73,11 @@ check.py
 python check.py
 ```
 
+![test](https://user-images.githubusercontent.com/41141851/118996709-0f37ab80-b9c3-11eb-9824-5e8a48d87688.png)
+compair.py 코드를 통해 2주동안 존버를 했을 경우와 변동성 돌파를 사용한 결과를 비교를 해 봤습니다. (2021.05.20 기준)
+존버를 했을 경우 -22.92% 손해를 입고
+변동성 돌파를 사용한 경우 적절한 k값과 이동평균 값을 사용한다면 최저 -0.51% 손해를 본 것을 알 수 있습니다.
+
 ### 코인을 추가할 때
 - coin_list 정보 갱신
 - reset_dataset.csv 파일 정보 갱신
