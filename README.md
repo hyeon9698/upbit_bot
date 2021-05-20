@@ -5,6 +5,7 @@
 - 참고 코드: [파이썬을 이용한 비트코인 자동매매](https://github.com/sharebook-kr/book-cryptocurrency) (Apache License 2.0)
 1. main.py -> 비트코인 + 알트코인을 자동으로 매매해 주는 봇 + 실시간 진행 상황을 Telegram으로 문자 전송 + 데이터를 쌓아서 실제로 얼마를 벌었는지 비교
 2. check.py -> 봇을 못 믿는 사람을 위해 실시간으로 변동성을 파악해서 알려주는 봇, 매수 매도는 사용자가 하기
+3. compair.py -> 실재로 존버를 했을 경우와 변동성 돌파 전략을 사용했을 경우를 비교하는 코드
 ### 실행방법
 - [virtualenv 코드 참고 사이트](https://dgkim5360.tistory.com/entry/python-virtualenv-on-linux-ubuntu-and-windows)
 - 24시간 코드 돌리는 것은 pythonanywhere 사이트를 이용했음
