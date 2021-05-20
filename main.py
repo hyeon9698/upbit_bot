@@ -14,7 +14,7 @@ def cal_target(ticker):
     yesterday = df_cal_target.iloc[-2]
     today = df_cal_target.iloc[-1]
     yesterday_range = yesterday['high'] - yesterday['low']
-    target = today['open'] + yesterday_range * 0.4
+    target = today['open'] + yesterday_range * 0.5
     return target
 def sell(ticker):
     # time.sleep(0.1)
@@ -96,7 +96,7 @@ def printall():
 def get_yesterday_ma15(ticker):
     df_get_yesterday_ma15 = pyupbit.get_ohlcv(ticker)
     close = df_get_yesterday_ma15['close']
-    ma = close.rolling(window=10).mean()
+    ma = close.rolling(window=5).mean()
     return ma[-2]
 
 # 객체 생성
@@ -108,14 +108,13 @@ token = "여기에 telegram-token-key 넣어주세요"
 mc = "여기에 telegram-mc-key 넣어주세요"
 bot = telegram.Bot(token)
 df = pd.read_csv('dataset.csv')
-df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
-df3 = pd.DataFrame(columns=['date','coin','VAL_value','sell_price'])
+# df2 = pd.DataFrame(columns=['date','jonbeo','auto_upbit','difference_jonbeo_autoupbit'])
 
 # 변수 설정
-INF = 1000000000000
 coin_list = ["KRW-BTC", "KRW-ETH", "KRW-DOGE"]
 n = len(coin_list)
 percent_list = [0.05]*n # 가진 돈의 5프로씩만 투자함
+INF = 1000000000000
 skip_list = []
 n = len(coin_list)
 money_list = [0]*(n)
