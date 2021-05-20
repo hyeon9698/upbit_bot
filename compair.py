@@ -18,7 +18,7 @@ upbit = pyupbit.Upbit(access, secret)
 
 coin_list = ["KRW-BTC", "KRW-ETH", "KRW-DOGE"]
 
-days = 1
+days = 14
 k_range = [0.4,0.5,0.6]
 ma_range = [0,5,10,15]
 total_list = []
@@ -87,4 +87,4 @@ s = sorted(total_list, key = lambda x: (x[0]))
 for i in s:
     print(f'{"%  3.2f"%(i[0]*100-100)}% |||    k  {"%2.2f"%i[1]}    |||    ma  {"%2d"%i[2]}    |||    존버  {"%2.2f"%(i[3]*100-100)}%')
 # print(f'"예상 평균 손익 %는 "{not_1_total/not_1_cnt*100-100}%')
-df.to_csv('testing2.csv')
+# df.to_csv('testing2.csv')
