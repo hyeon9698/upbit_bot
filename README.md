@@ -38,7 +38,7 @@ vscode 또는 pythonanywhere 사이트에서 아래 코드를 진행을 합니�
 ### main.py
 ```python
 # 깃허브 클론
-git clone <https://github.com/hyeon9698/upbit_bot>
+git clone https://github.com/hyeon9698/upbit_bot
 cd upbit_bot
 # 가상 환경 세팅
 pip3 install virtualenv
