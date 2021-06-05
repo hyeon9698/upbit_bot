@@ -73,7 +73,7 @@ python check.py
 ```
 실시간으로 몇 프로 올랐고 내렸고를 확인 할 수 있습니다.
 
-### compair.py
+### compair.py (backtesting)
 ![test](https://user-images.githubusercontent.com/41141851/118996709-0f37ab80-b9c3-11eb-9824-5e8a48d87688.png)
 compair.py 코드를 통해 2주동안 존버를 했을 경우와 변동성 돌파를 사용한 결과를 비교를 해 봤습니다. (2021.05.20 기준)
 존버를 했을 경우 -22.92% 손해를 입고
